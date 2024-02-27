@@ -3,13 +3,14 @@ package com.mricode.leetcode.dsa.sorting;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class BubbleSort {
+public class Sorting {
     public static void main(String[] args) {
        int[] arr = {5,17,9,2,3,1};
        //int[] arr = {1,2,3,4,5,6};
        //int[] arr = {};
        //bubbleSort(arr);
-       selectionSort(arr);
+       //selectionSort(arr);
+       insertionSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -43,6 +44,19 @@ public class BubbleSort {
             int last = arr.length - i -1;
             int maxIndex= getMaxIndex(arr, 0, last);
             swap(arr, maxIndex, last);
+        }
+    }
+
+    static void insertionSort(int[] arr) {
+        for (int i=0; i < arr.length -1; i++) {
+            for (int j=i+1; j>0; j--) {
+                if (arr[j] < arr[j-1]) {
+                    swap(arr, j, j-1);
+                }
+                else {
+                    break;
+                }
+            }
         }
     }
 
