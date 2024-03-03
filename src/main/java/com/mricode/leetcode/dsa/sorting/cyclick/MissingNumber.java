@@ -1,9 +1,17 @@
-package com.mricode.leetcode.dsa.sorting;
+package com.mricode.leetcode.dsa.sorting.cyclick;
+
+import java.util.Arrays;
 
 //https://leetcode.com/problems/missing-number/
 //Amazon question
 class MissingNumber {
-    public int missingNumber(int[] nums) {
+
+    public static void main(String[] args) {
+        int[] arr = {3,0,1};
+        missingNumber(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+    public static int missingNumber(int[] nums) {
         int i=0;
         while (i < nums.length) {
             int correct = nums[i];

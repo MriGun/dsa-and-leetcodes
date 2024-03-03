@@ -1,4 +1,4 @@
-package com.mricode.leetcode.dsa.sorting;
+package com.mricode.leetcode.dsa.sorting.cyclick;
 
 
 import java.util.Arrays;
