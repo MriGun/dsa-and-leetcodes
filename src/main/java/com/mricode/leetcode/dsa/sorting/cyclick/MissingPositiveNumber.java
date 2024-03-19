@@ -4,19 +4,22 @@ import java.util.Arrays;
 
 
 //https://leetcode.com/problems/first-missing-positive/description/
+
+//Hints
+//Ignore negetive number and the elements greater than the length of array
 public class MissingPositiveNumber {
 
     public static void main(String[] args) {
-        int[] arr = {3,0,1};
+        int[] arr = {1,2,0};
         int missingNumber = firstMissingPositive(arr);
         System.out.println(missingNumber);
     }
     public static int firstMissingPositive(int[] nums) {
         int i=0;
         while (i < nums.length) {
-            int correct = nums[i] -1;
-            if (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[correct]) {
-                swap(nums, i, correct);
+            int correctIndex = nums[i] -1;
+            if (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[correctIndex]) {
+                swap(nums, i, correctIndex);
             }
             else {
                 i++;
