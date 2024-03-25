@@ -2,7 +2,7 @@ package com.mricode.leetcode.dsa.pattern;
 
 public class Pattern {
     public static void main(String[] args) {
-        pattern5(5);
+        pattern30(5);
     }
 
     static void pattern1(int n) {
@@ -47,11 +47,16 @@ public class Pattern {
     }
 
     static void pattern5(int n) {
+        int index= 1;
         for (int row=1; row<2*n; row++) {
+
             if (row > n) {
-                for (int col=1; col<=row-2; col++) {
+                //System.out.println("index = " + index);
+                for (int col=1; col<=row-(2*index); col++) {
                     System.out.print("* ");
+
                 }
+                index = index+1;
             }
             else {
                 for (int col=1; col<=row; col++) {
@@ -60,6 +65,39 @@ public class Pattern {
             }
 
             //when one row is printed, we need a new line
+            System.out.println();
+        }
+    }
+
+    static void pattern28(int n) {
+        for (int row=0; row<2*n; row++) {
+            int totalColsInRow = row > n ? 2*n -row : row;
+            int spaces = n-totalColsInRow;
+            for (int s=0; s<spaces; s++) {
+                System.out.print(" ");
+            }
+            for (int col=0; col<totalColsInRow; col++) {
+                System.out.print("* ");
+            }
+            //when one row is printed , we need a new line
+            System.out.println();
+        }
+    }
+
+    static void pattern30(int n) {
+        for (int row = 0; row < n; row++) {
+
+            for (int space = 0; space < n-row ; space++) {
+                System.out.print(" ");
+            }
+
+            for (int col = row; col >= 1; col--) {
+                System.out.print(col);
+            }
+
+            for (int col = 2; col <= row; col++) {
+                System.out.print(col);
+            }
             System.out.println();
         }
     }
