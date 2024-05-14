@@ -6,6 +6,7 @@ public class MergeSort {
     public static void main(String[] args) {
         int[] arr = {5,4,3,2,1};
         int[] ans = mergeSort(arr);
+         mergeSortInPlace(arr, 0, arr.length);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -51,11 +52,63 @@ public class MergeSort {
         }
 
         while (j < second.length) {
-            mix[k] = second[i];
-            i++;
+            mix[k] = second[j];
             j++;
+            k++;
         }
 
         return mix;
+    }
+
+    static void mergeSortInPlace(int[] arr, int s, int e) {
+
+        if (e-s == 1) {
+            return;
+        }
+
+        int mid = (s+e) / 2;
+
+        mergeSortInPlace(arr, s, mid);
+        mergeSortInPlace(arr, mid, e);
+
+        mergeInPlace(arr, s, mid, e);
+    }
+
+    private static void mergeInPlace(int[] arr, int start, int mid, int end) {
+
+        int[] mix = new int [end-start];
+
+        int i = start;
+        int j = mid;
+        int k = 0;
+
+        while (i < mid && j< end) {
+            if (arr[i] < arr[j]) {
+                mix[k] = arr[i];
+                i++;
+            }
+            else {
+                mix[k] = arr[j];
+                j++;
+            }
+            k++;
+        }
+
+        //it may be possible, one of the array is not complete
+        while (i < mid) {
+            mix[k] = arr[i];
+            i++;
+            k++;
+        }
+
+        while (j < end) {
+            mix[k] = arr[j];
+            j++;
+            k++;
+        }
+
+        for (int l=0; l< mix.length; l++) {
+            arr[start+l] = mix[l];
+        }
     }
 }
