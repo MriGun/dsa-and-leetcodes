@@ -5,10 +5,18 @@ import java.util.List;
 
 public class Maze {
     public static void main(String[] args) {
-        System.out.println(count(3, 3));
+        /*System.out.println(count(3, 3));
         path("",3, 3);
         System.out.println(pathRet("",3, 3));
-        System.out.println(pathRetDiagonal("",3, 3));
+        System.out.println(pathRetDiagonal("",3, 3));*/
+
+
+        boolean[][] board = {
+                {true, true, true},
+                {true, false, true},
+                {true, true, true}
+        };
+        pathRestrictions("",0, 0, board);
     }
 
     static int count(int r, int c) {
@@ -85,5 +93,25 @@ public class Maze {
         }
 
         return list;
+    }
+
+    static void pathRestrictions(String processed, int r, int c, boolean[][] maze) {
+
+        if (r== maze.length -1 && c==maze[0].length -1) {
+            System.out.println(processed);
+            return;
+        }
+
+        if (!maze[r][c]) {
+            return;
+        }
+
+        if (r < maze.length -1) {
+            pathRestrictions(processed + 'D', r+1, c, maze);
+        }
+
+        if (c < maze[0].length -1) {
+            pathRestrictions(processed + 'R', r, c+1, maze);
+        }
     }
 }
