@@ -11,7 +11,7 @@ public class AllPath {
                 {true, true, true},
                 {true, true, true}
         };
-        //allPath("",0, 0, board);
+        //allPath("",0, 0, board); b
 
         int[][] path = new int[board.length][board[0].length];
         allPathPrint("",0, 0, board, path, 1);
