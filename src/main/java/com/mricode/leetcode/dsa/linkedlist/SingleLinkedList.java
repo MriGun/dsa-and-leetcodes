@@ -23,10 +23,10 @@ public class SingleLinkedList {
     }
 
 
-    public void insertlast(int val) {
+    public void insertLast(int val) {
 
         if (tail == null) {
-            insertlast(val);
+            insertFirst(val);
             return;
         }
 
@@ -34,6 +34,31 @@ public class SingleLinkedList {
         tail.next = node;
         tail = node;
         size += 1;
+    }
+
+    public void insertAtParticularIndex(int val, int index) {
+
+        if (index ==0) {
+            insertFirst(val);
+            return;
+        }
+
+        if (index == size) {
+            insertLast(val);
+            return;
+        }
+
+        Node temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp.next;
+
+        }
+
+        Node node = new Node(val, temp.next);
+        temp.next = node;
+
+        size++;
+
     }
 
     public void display() {
@@ -55,6 +80,12 @@ public class SingleLinkedList {
         }
 
         public Node(Node node) {
+            this.next = node;
+        }
+
+
+        public Node(int value, Node node) {
+            this.value = value;
             this.next = node;
         }
     }
