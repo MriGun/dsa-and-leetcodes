@@ -10,7 +10,8 @@ public class LLTest {
         ll.insertFirst(5);
         ll.insertFirst(9);
         ll.insertFirst(3);
-        ll.insertlast(17);
+        ll.insertLast(17);
+        ll.insertAtParticularIndex(100, 3);
 
         ll.display();
     }
