@@ -71,6 +71,43 @@ public class SingleLinkedList {
         System.out.print("END");
     }
 
+    public int deleteFirst() {
+        int val = head.value;
+        head = head.next;
+
+        if (head == null) {
+            tail = null;
+        }
+
+        size--;
+
+        return val;
+    }
+
+    public int deleteLast() {
+
+        if (size <= 1) {
+            deleteFirst();
+        }
+
+        Node secondLast = getIndexValue(size -2);
+        int val = tail.value;
+
+        tail = secondLast;
+        tail.next = null;
+
+        return val;
+    }
+
+    public Node getIndexValue(int index) {
+        Node node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+
+        return node;
+    }
+
     private class Node {
         private int value;
         private Node next;
