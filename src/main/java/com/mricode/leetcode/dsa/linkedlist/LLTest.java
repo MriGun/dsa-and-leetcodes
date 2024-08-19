@@ -12,7 +12,14 @@ public class LLTest {
         ll.insertFirst(3);
         ll.insertLast(17);
         ll.insertAtParticularIndex(100, 3);
-
+        ll.display();
+        System.out.println();
+        System.out.println(ll.deleteFirst());
+        System.out.println();
+        ll.display();
+        System.out.println();
+        System.out.println(ll.deleteLast());
+        System.out.println();
         ll.display();
     }
 }
