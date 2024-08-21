@@ -20,6 +20,7 @@ public class LLTest {
         System.out.println();
         System.out.println(ll.deleteLast());
         System.out.println();
+        System.out.println(ll.deleteParticularIndex(2));
         ll.display();
     }
 }

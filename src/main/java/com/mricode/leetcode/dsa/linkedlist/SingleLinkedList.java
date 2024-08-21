@@ -99,6 +99,23 @@ public class SingleLinkedList {
         return val;
     }
 
+    public int deleteParticularIndex(int index) {
+        if (index == 0) {
+            return deleteFirst();
+        }
+
+        if (index == size-1) {
+            return deleteLast();
+        }
+
+        Node prev = getIndexValue(index-1);
+        int val = prev.next.value;
+
+        prev.next = prev.next.next;
+
+        return val;
+    }
+
     public Node getIndexValue(int index) {
         Node node = head;
         for (int i = 0; i < index; i++) {
@@ -106,6 +123,19 @@ public class SingleLinkedList {
         }
 
         return node;
+    }
+
+    public Node findValue(int val) {
+        Node node = head;
+        while (node != null) {
+            if (node.value == val) {
+                return node;
+            }
+
+            node = node.next;
+        }
+
+        return null;
     }
 
     private class Node {
