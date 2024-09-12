@@ -12,6 +12,8 @@ public class DLLTest {
         list.insertFirst(3);
         list.insertFirst(17);
 
+        list.insertLast(99);
+
         list.display();
     }
     }
