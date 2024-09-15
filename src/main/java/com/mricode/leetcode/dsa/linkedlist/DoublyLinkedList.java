@@ -38,6 +38,41 @@ public class DoublyLinkedList {
         node.prev = null;
     }
 
+    public void insert(int after, int val) {
+
+        Node p = findValue(after);
+
+        if (p ==null) {
+            System.out.println("Node does not exist!");
+            return;
+        }
+
+        Node node = new Node(val);
+        node.next = p.next;
+        p.next = node;
+        node.prev = p;
+        if (node.next != null) {
+            node.next.prev = node;
+        }
+
+
+    }
+
+
+    public Node findValue(int val) {
+        Node node = head;
+        while (node != null) {
+            if (node.val == val) {
+                return node;
+            }
+
+            node = node.next;
+        }
+
+        return null;
+    }
+
+
     public void display() {
         Node node = head;
         Node last = null;
