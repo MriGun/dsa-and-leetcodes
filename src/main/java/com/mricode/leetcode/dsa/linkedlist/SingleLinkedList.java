@@ -154,6 +154,38 @@ public class SingleLinkedList {
         return null;
     }
 
+    //https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/
+    public void duplicates() {
+
+        Node node = head;
+
+        while (node.next != null) {
+            if (node.next != null && node.value == node.next.value) {
+                node.next = node.next.next;
+                size--;
+            }
+            else {
+                node = node.next;
+            }
+        }
+        tail = node;
+        tail.next = null;
+    }
+
+    public static void main(String[] args) {
+        SingleLinkedList list = new SingleLinkedList();
+        list.insertLast(1);
+        list.insertLast(1);
+        list.insertLast(2);
+        list.insertLast(3);
+        list.insertLast(3);
+        list.insertLast(3);
+
+        list.display();
+        list.duplicates();
+        list.display();
+    }
+
     private class Node {
         private int value;
         private Node next;
