@@ -172,6 +172,38 @@ public class SingleLinkedList {
         tail.next = null;
     }
 
+    //https://leetcode.com/problems/merge-two-sorted-lists/
+    public static SingleLinkedList merge(SingleLinkedList first, SingleLinkedList second) {
+         Node f = first.head;
+         Node s = second.head;
+
+         SingleLinkedList ans = new SingleLinkedList();
+
+         while (f !=null && s != null) {
+             if (f.value < s.value) {
+                 ans.insertLast(f.value);
+                 f = f.next;
+             }
+             else {
+                 ans.insertLast(s.value);
+                 s = s.next;
+             }
+         }
+
+         while (f != null) {
+             ans.insertLast(f.value);
+             f = f.next;
+         }
+
+        while (s != null) {
+            ans.insertLast(s.value);
+            s = s.next;
+        }
+
+        return ans;
+    }
+
+
     public static void main(String[] args) {
         SingleLinkedList list = new SingleLinkedList();
         list.insertLast(1);
@@ -184,6 +216,24 @@ public class SingleLinkedList {
         list.display();
         list.duplicates();
         list.display();
+
+        System.out.println();
+        System.out.println();
+
+        SingleLinkedList s1 = new SingleLinkedList();
+        s1.insertLast(1);
+        s1.insertLast(2);
+        s1.insertLast(4);
+
+        SingleLinkedList s2 = new SingleLinkedList();
+        s2.insertLast(1);
+        s2.insertLast(3);
+        s2.insertLast(4);
+
+        SingleLinkedList ans = merge(s1, s2);
+        ans.display();
+
+
     }
 
     private class Node {
