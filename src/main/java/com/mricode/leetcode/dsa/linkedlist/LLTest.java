@@ -23,5 +23,11 @@ public class LLTest {
         ///System.out.println(ll.deleteParticularIndex(2));
         ll.insertRecursion(88, 2);
         ll.display();
+
+
+        ListNode listNode = new ListNode();
+
+
+
     }
 }
