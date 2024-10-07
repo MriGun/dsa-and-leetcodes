@@ -145,6 +145,23 @@ public class ListNode {
         return false;
     }
 
+    //https://leetcode.com/problems/middle-of-the-linked-list/description/
+    public ListNode middleNode(ListNode head) {
+
+        ListNode first = head;
+        ListNode slow = head;
+
+        while (first != null && first.next != null) {
+            slow = slow.next;
+            first = first.next.next;
+
+        }
+
+        return slow;
+
+    }
+
+
     private int findSquare(int number) {
 
         int ans = 0;
