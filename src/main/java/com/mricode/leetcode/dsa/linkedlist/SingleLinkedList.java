@@ -203,6 +203,49 @@ public class SingleLinkedList {
         return ans;
     }
 
+    public void bubbleSort() {
+        bubbleSort(size-1, 0);
+    }
+
+    private void bubbleSort(int row, int col) {
+
+        if (row < 0) {
+            return;
+        }
+
+        if (col < row) {
+            Node first = getIndexValue(col);
+            Node second = getIndexValue(col + 1);
+
+            if (first.value > second.value) {
+                //swap
+                if (first == head) {
+                    head = second;
+                    first.next = second.next;
+                    second.next = first;
+                }
+                else if (second == tail) {
+                    Node prev = getIndexValue(col -1);
+                    prev.next = second;
+                    tail = first;
+                    first.next = null;
+                    second.next = tail;
+                }
+                else {
+                    Node prev = getIndexValue(col -1);
+                    prev.next = second;
+                    first.next = second.next;
+                    second.next = first;
+                }
+
+            }
+            bubbleSort(row, col +1);
+        }
+        else {
+            bubbleSort(row-1, 0);
+        }
+    }
+
 
     public static void main(String[] args) {
         SingleLinkedList list = new SingleLinkedList();
@@ -233,6 +276,9 @@ public class SingleLinkedList {
         SingleLinkedList ans = merge(s1, s2);
         ans.display();
 
+        ans.bubbleSort();
+        System.out.println("Bubble sort");
+        ans.display();
 
     }
 
