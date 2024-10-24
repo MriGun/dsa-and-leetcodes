@@ -247,6 +247,20 @@ public class SingleLinkedList {
     }
 
 
+    //recursion reverse
+    private void reverse(Node node) {
+        if (node == tail) {
+           head = tail;
+           return;
+        }
+
+        reverse(node.next);
+        tail.next = node;
+        tail=node;
+        tail.next = null;
+    }
+
+
     public static void main(String[] args) {
         SingleLinkedList list = new SingleLinkedList();
         list.insertLast(1);
@@ -273,12 +287,23 @@ public class SingleLinkedList {
         s2.insertLast(3);
         s2.insertLast(4);
 
+
         SingleLinkedList ans = merge(s1, s2);
         ans.display();
 
-        ans.bubbleSort();
+        SingleLinkedList s3 = new SingleLinkedList();
+
+        for (int i=7; i>0; i--) {
+                s3.insertLast(i);
+        }
+
+        System.out.println();
+        s3.display();
         System.out.println("Bubble sort");
-        ans.display();
+        s3.bubbleSort();
+        s3.display();
+
+
 
     }
 
