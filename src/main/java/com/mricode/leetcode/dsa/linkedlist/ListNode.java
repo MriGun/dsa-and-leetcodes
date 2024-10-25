@@ -161,6 +161,31 @@ public class ListNode {
 
     }
 
+    //in place reverse of linkedlist
+    //https://leetcode.com/problems/reverse-linked-list/description/
+    public ListNode reverseList(ListNode head) {
+
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode prev = null;
+        ListNode present = head;
+        ListNode next = present.next;
+
+        while (present != null) {
+            present.next = prev;
+            prev = present;
+            present = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+
+        //in the end!
+        return prev;
+    }
+
 
     private int findSquare(int number) {
 
