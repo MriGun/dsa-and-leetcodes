@@ -261,6 +261,33 @@ public class SingleLinkedList {
     }
 
 
+    //in place reverse of linkedlist
+    //https://leetcode.com/problems/reverse-linked-list/description/
+    public void reverse() {
+
+        if (size < 2) {
+            return;
+        }
+
+        Node prev = null;
+        Node present = head;
+        Node next = present.next;
+
+        while (present != null) {
+            present.next = prev;
+            prev = present;
+            present = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+
+        //in the end!
+        head = prev;
+
+    }
+
+
     public static void main(String[] args) {
         SingleLinkedList list = new SingleLinkedList();
         list.insertLast(1);
