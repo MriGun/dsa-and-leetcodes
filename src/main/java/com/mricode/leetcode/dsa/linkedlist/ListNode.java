@@ -269,7 +269,33 @@ public class ListNode {
     //https://leetcode.com/problems/reorder-list/description/
     public void reorderList(ListNode head) {
 
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        ListNode mid = middleNode(head);
+        ListNode headSecond = reverseList(mid);
+
+        ListNode headFirst = head;
+
+        //rearrange
+        while (headFirst != null && headSecond != null) {
+            ListNode temp = headFirst.next;
+            headFirst.next = headSecond;
+            headFirst = temp;
+
+            temp = headSecond.next;
+            headSecond.next = headFirst;
+            headSecond = temp;
+
+        }
+
+        //next of tail to null
+        if (headFirst != null) {
+            headFirst.next = null;
+        }
     }
+
 
 
 }
