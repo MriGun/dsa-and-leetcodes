@@ -198,4 +198,104 @@ public class ListNode {
         return ans;
     }
 
+    //https://leetcode.com/problems/reverse-linked-list-ii/description/
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+
+        if (left == right) {
+            return head;
+        }
+
+        //skip th first left-1 nodes
+        ListNode current = head;
+        ListNode prev = null;
+
+        for (int i=0; current!= null && i< left -1; i++) {
+            prev = current;
+            current = current.next;
+        }
+        ListNode last = prev;
+        ListNode newEnd = current;
+
+        //reverse between lest and right
+        ListNode next = current.next;
+        for (int i = 0; current!=null && i < right-left +1; i++) {
+            current.next = prev;
+            prev = current;
+            current = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+
+        if (last != null) {
+            last.next = prev;
+        }
+        else {
+            head = prev;
+        }
+
+        newEnd.next = current;
+
+        return head;
+    }
+
+
+
+    //https://leetcode.com/problems/palindrome-linked-list/description/
+    public boolean isPalindrome(ListNode head) {
+       ListNode mid = middleNode(head);
+       ListNode secondHead = reverseList(mid);
+
+       ListNode reverseHead =  secondHead;
+
+       //compare both the halves
+        while (head != null && secondHead != null) {
+             if (head.val != secondHead.val) {
+                break;
+             }
+             head = head.next;
+             secondHead = secondHead.next;
+        }
+
+       reverseList(reverseHead);
+
+        if (head == null || secondHead == null) {
+            return true;
+        }
+        return false;
+    }
+
+
+    //https://leetcode.com/problems/reorder-list/description/
+    public void reorderList(ListNode head) {
+
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        ListNode mid = middleNode(head);
+        ListNode headSecond = reverseList(mid);
+
+        ListNode headFirst = head;
+
+        //rearrange
+        while (headFirst != null && headSecond != null) {
+            ListNode temp = headFirst.next;
+            headFirst.next = headSecond;
+            headFirst = temp;
+
+            temp = headSecond.next;
+            headSecond.next = headFirst;
+            headSecond = temp;
+
+        }
+
+        //next of tail to null
+        if (headFirst != null) {
+            headFirst.next = null;
+        }
+    }
+
+
+
 }
