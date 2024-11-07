@@ -240,6 +240,127 @@ public class ListNode {
     }
 
 
+    //https://leetcode.com/problems/reverse-nodes-in-k-group/description/
+    public ListNode reverseKGroup(ListNode head, int k) {
+
+        if (k <= 1 || head == null) {
+            return head;
+        }
+        //skip th first left-1 nodes
+        ListNode current = head;
+        ListNode prev = null;
+
+        while (true) {
+            ListNode last = prev;
+            ListNode newEnd = current;
+
+            //reverse between lest and right
+            ListNode next = current.next;
+            for (int i = 0; current!=null && i < k +1; i++) {
+                current.next = prev;
+                prev = current;
+                current = next;
+                if (next != null) {
+                    next = next.next;
+                }
+            }
+
+            if (last != null) {
+                last.next = prev;
+            }
+            else {
+                head = prev;
+            }
+
+            newEnd.next = current;
+
+            if (current == null) {
+                break;
+            }
+        }
+
+        return head;
+
+    }
+
+    //https://www.geeksforgeeks.org/reverse-alternate-k-nodes-in-a-singly-linked-list/
+    public ListNode reverseAlternateKGroup(ListNode head, int k) {
+
+        if (k <= 1 || head == null) {
+            return head;
+        }
+        //skip th first left-1 nodes
+        ListNode current = head;
+        ListNode prev = null;
+
+        while (current != null) {
+            ListNode last = prev;
+            ListNode newEnd = current;
+
+            //reverse between lest and right
+            ListNode next = current.next;
+            for (int i = 0; current!=null && i < k +1; i++) {
+                current.next = prev;
+                prev = current;
+                current = next;
+                if (next != null) {
+                    next = next.next;
+                }
+            }
+
+            if (last != null) {
+                last.next = prev;
+            }
+            else {
+                head = prev;
+            }
+
+            newEnd.next = current;
+
+            //skip the k nodes
+            for (int i = 0; current != null && i < k; i++) {
+                prev = current;
+                current = current.next;
+            }
+
+        }
+
+        return head;
+
+    }
+
+
+    //https://leetcode.com/problems/rotate-list/description/
+    public ListNode rotateRight(ListNode head, int k) {
+
+        if (k <= 0 || head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode last = head;
+        int length = 1;
+        while (last.next != null) {
+            last = last.next;
+            length++;
+        }
+
+        last.next = head;
+        int rotation = k % length;
+        int skip = length - rotation;
+
+        ListNode newLast = head;
+        for (int i = 0; i < skip-1; i++) {
+            newLast = newLast.next;
+        }
+
+        head = newLast.next;
+        newLast.next = null;
+
+        return head;
+
+    }
+
+
 
     //https://leetcode.com/problems/palindrome-linked-list/description/
     public boolean isPalindrome(ListNode head) {
