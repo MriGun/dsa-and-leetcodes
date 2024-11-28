@@ -34,6 +34,10 @@ public class InBuiltExample {
         System.out.println(queue.remove());
 
         Deque<Integer> deque = new ArrayDeque<>();
+        deque.add(4);
+        deque.addLast(67);
+
+        deque.remove();
 
     }
 }
