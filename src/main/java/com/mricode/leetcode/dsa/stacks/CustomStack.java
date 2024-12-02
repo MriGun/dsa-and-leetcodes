@@ -1,6 +1,6 @@
 package com.mricode.leetcode.dsa.stacks;
 
-public class CustomStack {
+public class    CustomStack {
 
     protected int[] data;
 
@@ -48,11 +48,11 @@ public class CustomStack {
         return data[ptr];
     }
 
-    private boolean isFull() {
+    public boolean isFull() {
         return ptr == data.length - 1; //ptr at last index
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return ptr == - 1;
     }
 }
