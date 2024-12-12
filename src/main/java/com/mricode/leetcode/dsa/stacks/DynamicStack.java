@@ -12,6 +12,7 @@ public class DynamicStack extends CustomStack{
 
     @Override
     public boolean push(int item) {
+        //this takes care of being full
         if (this.isFull()) {
             //double array size
            int[] temp = new int[data.length * 2];
@@ -25,5 +26,9 @@ public class DynamicStack extends CustomStack{
 
             data = temp;
         }
+
+        //at this point, we know array is not full
+        //insert item
+        return super.push(item);
     }
 }
