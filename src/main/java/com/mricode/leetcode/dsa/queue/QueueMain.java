@@ -3,7 +3,7 @@ package com.mricode.leetcode.dsa.queue;
 public class QueueMain {
     public static void main(String[] args) {
 
-        CustomQueue customQueue = new CustomQueue(5);
+        CircularQueue customQueue = new CircularQueue(5);
         customQueue.insert(3);
         customQueue.insert(16);
         customQueue.insert(7);
@@ -12,6 +12,8 @@ public class QueueMain {
 
 
         customQueue.display();
+        System.out.println(customQueue.remove());
+        customQueue.insert(45);
         System.out.println(customQueue.remove());
         customQueue.display();
 
