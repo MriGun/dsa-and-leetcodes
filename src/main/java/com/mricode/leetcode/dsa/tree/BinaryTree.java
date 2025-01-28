@@ -73,6 +73,21 @@ public class BinaryTree {
         prettyDisplay(node.left, level+1);
     }
 
+    public void preOrderTraversal() {
+        preOrderTraversal(root);
+    }
+
+    private void preOrderTraversal(Node node) {
+
+        if (node == null) {
+            return;
+        }
+
+        System.out.println(node.val + " ");
+        preOrderTraversal(node.left);
+        preOrderTraversal(node.right);
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         BinaryTree binaryTree = new BinaryTree();
