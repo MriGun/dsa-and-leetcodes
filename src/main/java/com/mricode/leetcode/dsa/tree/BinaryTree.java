@@ -88,6 +88,37 @@ public class BinaryTree {
         preOrderTraversal(node.right);
     }
 
+    public void inOrderTraversal() {
+        inOrderTraversal(root);
+    }
+
+    private void inOrderTraversal(Node node) {
+
+        if (node == null) {
+            return;
+        }
+
+        preOrderTraversal(node.left);
+        System.out.println(node.val + " ");
+        preOrderTraversal(node.right);
+    }
+
+    public void postOrderTraversal() {
+        postOrderTraversal(root);
+    }
+
+    private void postOrderTraversal(Node node) {
+
+        if (node == null) {
+            return;
+        }
+
+        preOrderTraversal(node.left);
+        preOrderTraversal(node.right);
+
+        System.out.println(node.val + " ");
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         BinaryTree binaryTree = new BinaryTree();
