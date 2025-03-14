@@ -1,5 +1,8 @@
 package com.mricode.leetcode.dsa.tree;
 
+import com.mricode.leetcode.dsa.tree.structure.Node;
+import com.mricode.leetcode.dsa.tree.structure.TreeNode;
+
 import java.util.*;
 
 public class TreeQuestions {
@@ -188,5 +191,38 @@ public class TreeQuestions {
          }
 
          return result;
+     }
+
+     //https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/
+     public Node connect(Node root) {
+
+        if (root == null) {
+            return root;
+        }
+
+         Node leftNode = root;
+
+        while (leftNode.left != null) {
+            linkNode(leftNode);
+            Node currentNode = leftNode;
+
+            while (currentNode.next != null) {
+                currentNode.right.next = currentNode.next.left;
+                currentNode = currentNode.next;
+                linkNode(currentNode);
+
+            }
+            leftNode = leftNode.left;
+
+        }
+        return root;
+
+     }
+
+     private Node linkNode(Node node) {
+        if (node.left != null) {
+            node.left.next = node.right;
+        }
+        return node;
      }
 }

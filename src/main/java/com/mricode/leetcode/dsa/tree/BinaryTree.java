@@ -1,5 +1,7 @@
 package com.mricode.leetcode.dsa.tree;
 
+import com.mricode.leetcode.dsa.tree.structure.Node;
+
 import java.util.Scanner;
 
 public class BinaryTree {
