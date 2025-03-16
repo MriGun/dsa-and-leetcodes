@@ -5,7 +5,7 @@ import com.mricode.leetcode.dsa.tree.structure.TreeNode;
 
 import java.util.*;
 
-public class TreeQuestions {
+public class BFS {
 
 
 
