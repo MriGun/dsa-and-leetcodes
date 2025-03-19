@@ -2,6 +2,9 @@ package com.mricode.leetcode.dsa.tree;
 
 import com.mricode.leetcode.dsa.tree.structure.TreeNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class TreeQustions {
 
     public static void main(String[] args) {
@@ -28,5 +31,38 @@ public class TreeQustions {
 
         return root;
 
+    }
+
+
+    //https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
+    Queue<TreeNode> queue = new LinkedList<>();
+    public void flatten(TreeNode root) {
+
+        TreeNode newNode = preOrder(root);
+
+        TreeNode rootNode = queue.poll();
+
+         while (!queue.isEmpty()){
+             rootNode.left = null;
+             TreeNode rightNode = queue.poll();
+
+             rootNode.right = rightNode;
+             if (rightNode != null) {
+                 rootNode = rightNode;
+             }
+
+         }
+
+    }
+
+     TreeNode preOrder(TreeNode node) {
+        if (node == null) {
+            return null;
+        }
+        queue.add(node);
+
+        preOrder(node.left);
+        preOrder(node.right);
+        return node;
     }
 }
