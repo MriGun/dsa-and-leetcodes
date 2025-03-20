@@ -36,7 +36,7 @@ public class TreeQustions {
 
     //https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
     Queue<TreeNode> queue = new LinkedList<>();
-    public void flatten(TreeNode root) {
+    public void flatten1(TreeNode root) {
 
         TreeNode newNode = preOrder(root);
 
@@ -64,5 +64,55 @@ public class TreeQustions {
         preOrder(node.left);
         preOrder(node.right);
         return node;
+    }
+
+    //2nd approach
+    public void flatten(TreeNode root) {
+       if (root == null) {
+           return;
+       }
+
+       TreeNode current = root;
+       while (current != null) {
+
+            if (current.left != null) {
+                TreeNode temp = current.left;
+                while (temp.right != null) {
+                    temp = temp.right;
+                }
+
+                temp.right = current.right;
+                current.right = current.left;
+                current.left = null;
+            }
+
+            current = current.right;
+       }
+    }
+
+    //https://leetcode.com/problems/validate-binary-search-tree/description/
+    public boolean isValidBST(TreeNode root) {
+          return validateBST(root, null, null);
+    }
+
+    private boolean validateBST(TreeNode node, Integer lower, Integer higher) {
+
+        if (node == null) {
+            return true;
+        }
+
+        if (lower != null && node.val <= lower ) {
+            return false;
+        }
+
+        if (higher != null && node.val >= higher ) {
+            return false;
+        }
+
+        boolean leftTree = validateBST(node.left, lower, node.val);
+        boolean rightTree = validateBST(node.right, node.val, higher);
+
+        return leftTree && rightTree;
+
     }
 }
