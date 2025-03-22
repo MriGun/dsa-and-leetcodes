@@ -55,5 +55,60 @@ public class DFS {
         return depth;
     }
 
+    //https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+         if (root == null) {
+             return null;
+         }
+
+         if (root.val == p.val || root.val == q.val) {
+             return root;
+         }
+
+         TreeNode left = lowestCommonAncestor(root.left, p, q);
+         TreeNode right = lowestCommonAncestor(root.right, p, q);
+
+         if (left != null && right != null) {
+             return root;
+         }
+
+         if (left == null && right != null) {
+             return right;
+         }
+         else {
+             return left;
+         }
+    }
+
+    //https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+
+    int counter = 0;
+     public int kthSmallest(TreeNode root, int k) {
+        return kthSmallestHelper(root, k).val;
+     }
+
+    public TreeNode kthSmallestHelper(TreeNode root, int k) {
+        if (root == null) {
+            return null;
+        }
+
+        TreeNode left = kthSmallestHelper(root.left, k);
+
+        if (left != null) {
+            return left;
+        }
+
+        counter++;
+
+        if (counter == k) {
+            return root;
+        }
+
+        return kthSmallestHelper(root.right, k);
+    }
+
+
+
+
 
 }
