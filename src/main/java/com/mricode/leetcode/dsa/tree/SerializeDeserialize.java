@@ -75,9 +75,13 @@ public class SerializeDeserialize {
         }
         String[] vals = data.split(",");
         Queue<String> queue = new LinkedList<>(Arrays.asList(vals));
-        TreeNode node =  deserializeHelper2(vals, 0);
+        int[] index = new int[1];
+        TreeNode node =  deserializeHelper2(vals, index);
         TreeNode newNode = deserializeHelper3(queue);
-        return newNode;
+
+        int indexL = 0;
+        TreeNode newNodeT = deserializeHelper4(vals, indexL);
+        return newNodeT;
     }
 
     public static TreeNode deserializeHelper3(Queue<String> queue) {
@@ -94,14 +98,14 @@ public class SerializeDeserialize {
         return node;
     }
 
-    public static TreeNode deserializeHelper2(String[] vals, int index) {
+    public static TreeNode deserializeHelper2(String[] vals, int[] index) {
 
-        if (index >= vals.length) {
+        if (index[0] >= vals.length) {
             return null;
         }
 
-        String strVal = vals[0];
-        index++;
+        String strVal = vals[index[0]];
+        index[0]++;
 
         if (strVal.equals("n")) {
             return null;
@@ -109,8 +113,28 @@ public class SerializeDeserialize {
 
         TreeNode node = new TreeNode(Integer.parseInt(strVal));
 
-        node.left = deserializeHelper2(Arrays.copyOfRange(vals, 1, vals.length), index);
-        node.right = deserializeHelper2(Arrays.copyOfRange(vals, 1, vals.length), index);
+        node.left = deserializeHelper2(vals, index);
+        node.right = deserializeHelper2(vals, index);
+        return node;
+    }
+
+    public static TreeNode deserializeHelper4(String[] vals, int indexL) {
+
+        if (indexL >= vals.length) {
+            return null;
+        }
+
+        String strVal = vals[indexL];
+        indexL++;
+
+        if (strVal.equals("n")) {
+            return null;
+        }
+
+        TreeNode node = new TreeNode(Integer.parseInt(strVal));
+
+        node.left = deserializeHelper4(vals, indexL);
+        node.right = deserializeHelper4(vals, indexL);
         return node;
     }
 
