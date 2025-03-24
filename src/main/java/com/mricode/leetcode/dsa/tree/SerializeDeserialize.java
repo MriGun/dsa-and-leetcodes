@@ -145,19 +145,25 @@ public class SerializeDeserialize {
         root.left.right = null;
 
         root.right = new TreeNode(3);
-        root.right.left = new TreeNode(4);
+        /*root.right.left = new TreeNode(4);
         root.right.right = new TreeNode(5);
 
         root.right.left.left = null;
         root.right.left.right = null;
 
         root.right.right.left = null;
-        root.right.right.right = null;
+        root.right.right.right = null;*/
 
         String str = serialize2(root);
         System.out.println(str);
 
         deserialize2(str);
+
+        DFS dfs = new DFS();
+
+        System.out.println(dfs.sumNumbers(root));
+
+
     }
 
 }
