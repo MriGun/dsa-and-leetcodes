@@ -142,4 +142,46 @@ public class DFS {
     }
 
 
+    //https://leetcode.com/problems/path-sum/description/
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+
+        if (targetSum == root.val && root.left == null && root.right == null) {
+            return true;
+        }
+        targetSum = targetSum - root.val;
+
+        boolean left = hasPathSum(root.left, targetSum);
+        boolean right = hasPathSum(root.right, targetSum);
+
+        return left || right;
+    }
+
+    //https://leetcode.com/problems/sum-root-to-leaf-numbers/description/
+    public int sumNumbers(TreeNode root) {
+
+         return sumNumbersHelper(root,  0);
+
+    }
+
+    public int sumNumbersHelper(TreeNode node, int num) {
+        if (node == null) {
+            return 0;
+        }
+
+        num = node.val + num;
+
+        if (node.left == null && node.right == null) {
+            return num;
+        }
+
+        int left = sumNumbersHelper(node.left,  num*10 );
+        int right = sumNumbersHelper(node.right, num*10);
+
+        return left + right;
+    }
+
+
 }
