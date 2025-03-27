@@ -2,7 +2,7 @@ package com.mricode.leetcode.dsa.tree;
 
 import com.mricode.leetcode.dsa.tree.structure.TreeNode;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class DFS {
     int diameter = 0;
@@ -207,6 +207,117 @@ public class DFS {
          ans = Math.max(ans, pathSum);
 
          return Math.max(left, right) + node.val;
+    }
+
+    boolean findPath(TreeNode node, int[] arr) {
+         if (node == null) {
+             return arr.length == 0;
+         }
+
+         return findPathHelper(node, arr, 0);
+    }
+
+    private boolean findPathHelper(TreeNode node, int[] arr, int index) {
+         if (node == null) {
+             return false;
+         }
+
+         if (index >= arr.length || node.val != arr[index]) {
+             return false;
+         }
+
+         if (node.left == null && node.right == null && index == arr.length -1) {
+             return true;
+         }
+
+        boolean left = findPathHelper(node.left, arr, index+1);
+        boolean right = findPathHelper(node.right, arr, index+1);
+
+        return left || right;
+    }
+
+    int countPaths(TreeNode node, int sum) {
+        List<Integer> path = new ArrayList<>();
+        return countPathsHelper(node, sum, path);
+    }
+
+    private int countPathsHelper(TreeNode node, int sum, List<Integer> path) {
+
+         if (node == null) {
+             return 0;
+         }
+
+         path.add(node.val);
+         int count = 0;
+         int s = 0;
+
+          //how many paths i can make
+        ListIterator<Integer> itr = path.listIterator(path.size());
+        while (itr.hasPrevious()) {
+            s += itr.previous();
+            if (s == sum) {
+                count++;
+            }
+        }
+
+        count += countPathsHelper(node.left, sum, path) + countPathsHelper(node.right, sum, path);
+
+        //backtrack
+        path.remove(path.size() -1);
+
+        return count;
+
+    }
+
+    List<List<Integer>>  printAllPaths(TreeNode node, int sum) {
+        List<Integer> path = new ArrayList<>();
+        List<List<Integer>> paths = new ArrayList<>();
+        printAllPathsHelper(node, sum, paths, path);
+        return paths;
+    }
+
+    private void   printAllPathsHelper(TreeNode node, int sum, List<List<Integer>> paths, List<Integer> path) {
+
+        if (node == null) {
+            return;
+        }
+
+        path.add(node.val);
+
+        if (node.left == null && node.right == null && node.val == sum) {
+            paths.add(new ArrayList<>(path));
+        }
+        else {
+            printAllPathsHelper(node.left, sum - node.val, paths, path);
+            printAllPathsHelper(node.right, sum - node.val, paths, path);
+        }
+
+        //backtrack
+        path.remove(path.size() -1);
+
+
+    }
+
+    //dfs using stack
+    void dfsStack(TreeNode node) {
+         if (node == null) {
+             return;
+         }
+
+         Stack<TreeNode> stack = new Stack<>();
+         stack.push(node);
+
+         while (!stack.isEmpty()) {
+             TreeNode removedNode =  stack.pop();
+             System.out.println(removedNode.val);
+
+             if (removedNode.right != null) {
+                 stack.push(removedNode.right);
+             }
+             if (removedNode.left != null) {
+                 stack.push(removedNode.left);
+             }
+         }
     }
 
 
