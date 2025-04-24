@@ -109,6 +109,12 @@ public class Heap<T extends Comparable> {
 
         System.out.println(list1);
 
+        String a = "Mrinmoy1";
+        Integer b = 2;
+
+        System.out.println("hashCode of a is : " + a.hashCode());
+        System.out.println("hashCode of b is : " + b.hashCode());
+
     }
 
 
