@@ -44,12 +44,15 @@ public class MapUsingHash {
     }
 
     public static void main(String[] args) {
-        MapUsingHash map = new MapUsingHash();
+        //MapUsingHash map = new MapUsingHash();
+
+        HashMapFinal map = new HashMapFinal<>();
 
         map.put("apple", "m1");
         map.put("lenevo", "amd");
         map.put("asus", "intel");
 
         System.out.println(map.get("asus"));
+        System.out.println(map);
     }
 }
