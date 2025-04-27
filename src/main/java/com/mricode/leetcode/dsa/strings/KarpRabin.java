@@ -29,6 +29,7 @@ public class KarpRabin {
            if (textHash == patternHash) {
                if (text.substring(i, i+patternLength).equals(pattern)) {
                    System.out.println("Pattern found at string " + i);
+                   break;
                }
            }
 
