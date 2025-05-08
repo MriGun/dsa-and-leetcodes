@@ -10,6 +10,10 @@ public class Heap<T extends Comparable> {
         list = new ArrayList<>();
     }
 
+    public int size(){
+        return list.size();
+    }
+
     private void swap(int first, int second) {
         T temp = list.get(first);
         list.set(first, list.get(second));
