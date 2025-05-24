@@ -38,7 +38,7 @@ public class BinarytreeFromPreAndInOrder {
 
         int inorderIndex = map.get(current);
 
-        node.left = buildTreeHelper(preorder, inorder, left, inorderIndex+1, map, index);
+        node.left = buildTreeHelper(preorder, inorder, left, inorderIndex-1, map, index);
         node.right = buildTreeHelper(preorder, inorder, inorderIndex+1, right, map, index);
 
         return node;
