@@ -6,11 +6,14 @@ public class WordLadder {
 
     //https://leetcode.com/problems/word-ladder/
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        if (!wordList.contains(endWord)) {
+
+        Set<String> wordSet = new HashSet<>(wordList);
+
+        if (!wordSet.contains(endWord)) {
             return 0;
         }
 
-        Set<String> visited = new HashSet<>();
+        //Set<String> visited = new HashSet<>();
         Queue<String> queue = new LinkedList<>();
 
         queue.offer(beginWord);
@@ -23,6 +26,10 @@ public class WordLadder {
             for (int i = 0; i < size; i++) {
                 String current = queue.poll();
 
+                if (current.equals(endWord)) {
+                    return length +1;
+                }
+
                 for (int j = 0; j < current.length(); j++) {
                     char[] temp = current.toCharArray();
                     for (char ch = 'a'; ch <= 'z' ; ch++) {
@@ -32,10 +39,10 @@ public class WordLadder {
                             return length +1;
                         }
 
-                        if (wordList.contains(newWord) && !visited.contains(newWord)) {
+                        if (wordSet.contains(newWord) ) {
 
                             queue.offer(newWord);
-                            visited.add(newWord);
+                            wordSet.remove(current);
 
                         }
 
