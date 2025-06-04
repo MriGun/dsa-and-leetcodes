@@ -7,30 +7,30 @@ import java.util.PriorityQueue;
 public class KthSmallest {
 
     //https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+
+    private int ans;
+    private int k;
     public int kthSmallest(TreeNode root, int k) {
 
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        kthSmallestHelper(root, minHeap, k);
-
-        //remove k elements
-        int ans = 0;
-        for (int i = 0; i < k; i++) {
-            ans = minHeap.poll();
-        }
-
+        this.k = k;
+        kthSmallestHelper(root);
         return ans;
     }
 
-    private void kthSmallestHelper(TreeNode node, PriorityQueue<Integer> minHeap, int k) {
+    private void kthSmallestHelper(TreeNode node) {
 
         if (node == null) {
             return;
         }
 
-        kthSmallestHelper(node.left, minHeap, k);
+        kthSmallestHelper(node.left);
 
-        minHeap.offer(node.val);
+        k--;
+        if (k ==0) {
+            ans = node.val;
+            return;
+        }
 
-        kthSmallestHelper(node.right, minHeap, k);
+        kthSmallestHelper(node.right);
     }
 }
