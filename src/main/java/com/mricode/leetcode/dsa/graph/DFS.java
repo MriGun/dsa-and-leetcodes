@@ -43,15 +43,15 @@ public class DFS {
         int cols = image[0].length;
 
 
-        boolean visited[][] = new boolean[rows][cols]; //fasle
+        //boolean visited[][] = new boolean[rows][cols]; //fasle
 
 
-        floodFillDfs(image, sr, sc, color, image[sr][sc], rows, cols, visited);
+        floodFillDfs(image, sr, sc, color, image[sr][sc], rows, cols);
 
         return image;
     }
 
-    public void floodFillDfs(int[][] image, int row, int col, int newColor, int curColor, int totalRows, int totalCols, boolean visited[][]){
+    public void floodFillDfs(int[][] image, int row, int col, int newColor, int curColor, int totalRows, int totalCols){
         if (row < 0 || row >= totalRows || col < 0 || col >= totalCols) {
             return;
         }
@@ -60,12 +60,12 @@ public class DFS {
             return;
         }
 
-        if (visited[row][col]) {
+        if (image[row][col] == newColor) {
             return;
         }
 
         image[row][col] = newColor;
-        visited[row][col] = true;
+        //visited[row][col] = true;
 
         //visit neighbours [up, right, down, left]
         int adjList[][] = {
@@ -76,7 +76,7 @@ public class DFS {
         };
 
         for (int neighbour[] : adjList) {
-            floodFillDfs(image, neighbour[0], neighbour[1], newColor, curColor, totalRows, totalCols, visited);
+            floodFillDfs(image, neighbour[0], neighbour[1], newColor, curColor, totalRows, totalCols);
         }
 
     }
