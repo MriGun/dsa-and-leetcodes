@@ -1,6 +1,8 @@
 package com.mricode.leetcode.dsa.graph;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class DFS {
 
@@ -80,5 +82,51 @@ public class DFS {
         }
 
     }
+
+
+
+    public int[][] floodFillBfs(int[][] image, int sr, int sc, int color) {
+
+        int rows = image.length;
+        int cols = image[0].length;
+
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[] {sr, sc});
+        int curColour = image[sr][sc];
+        image[sr][sc] = color;
+
+
+
+        while (!queue.isEmpty()) {
+            int node[] = queue.poll();
+            int row = node[0];
+            int col = node[1];
+
+            int adjList[][] = {
+                    {row - 1, col},
+                    {row, col + 1},
+                    {row +1, col},
+                    {row, col -1}
+            };
+
+            for (int[] neighbour : adjList) {
+                int r = neighbour[0];
+                int c = neighbour[1];
+
+                if (r < 0 || r >= rows || c < 0 || c >= cols || image[r][c] != curColour || image[r][c] == color) {
+                    continue;
+                }
+
+                image[r][c] = color;
+                queue.offer(new int[]{r, c});
+
+            }
+        }
+
+
+        return image;
+    }
+
+
 
 }
