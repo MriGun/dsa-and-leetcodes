@@ -172,5 +172,59 @@ public class DFS {
 
     }
 
+    public int numIslands2(char[][] grid) {
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int islands = 0;
+
+        boolean visited[][] = new boolean[rows][cols];
+        Queue<int[]> queue = new LinkedList<>();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    visited[i][j] = true;
+                    queue.offer(new int[]{i,j});
+                    numIslandsQueue(queue, grid, visited, rows, cols);
+                    islands++;
+                }
+            }
+        }
+
+        return islands;
+
+    }
+
+    private void numIslandsQueue(Queue<int[]> queue, char[][] grid, boolean[][] visited, int rows, int cols) {
+        while (!queue.isEmpty()) {
+            int[] node = queue.poll();
+            int row = node[0];
+            int col = node[1];
+
+            int adjList[][] = {
+                    {row - 1, col},
+                    {row, col + 1},
+                    {row + 1, col},
+                    {row, col - 1}
+            };
+
+            for (int[] neighbour : adjList) {
+                {
+                    int r = neighbour[0];
+                    int c = neighbour[1];
+
+                    //out of bound
+                    if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] == '0' || visited[r][c]) {
+                        continue;
+                    }
+                    visited[r][c] = true;
+                    queue.offer(new int[]{r, c});
+
+                }
+            }
+        }
+    }
+
 
 }
