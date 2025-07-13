@@ -38,9 +38,9 @@ public class Questions {
                         set.remove(neighbour);
                     }
                 }
-                level++;
-            }
 
+            }
+            level++;
 
         }
 
@@ -57,7 +57,7 @@ public class Questions {
                 if (ch == word.charAt(i)) {
                    continue;
                 }
-                String newWord = word.substring(0, 1) + ch + word.substring(i+1, word.length());
+                String newWord = word.substring(0, i) + ch + word.substring(i+1, word.length());
                 if (set.contains(newWord)) {
                     neighbours.add(newWord);
                 }
@@ -66,5 +66,64 @@ public class Questions {
 
         return neighbours;
 
+    }
+
+    //https://leetcode.com/problems/word-ladder-ii/description/
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        HashSet<String> set = new HashSet<>(wordList);
+        List<List<String>>  resultList = new ArrayList<>();
+
+
+        if (!set.contains(endWord)) {
+            return resultList;
+        }
+
+        List<String> dummy = new ArrayList<>();
+        dummy.add(beginWord);
+
+        Queue<List<String>> queue = new LinkedList<>();
+        queue.offer(dummy);
+
+        if (set.contains(beginWord)) {
+            set.remove(beginWord);
+        }
+
+        int level = 0;
+        int resultLevel = -1;
+
+        while (!queue.isEmpty()) {
+            HashSet<String> usedWords = new HashSet<>();
+            int currentLevelSize = queue.size();
+
+            for (int i = 0; i <currentLevelSize; i++) {
+                List<String> nodeList = queue.poll();
+                String node = nodeList.get(nodeList.size()-1);
+                if (node.equals(endWord)) {
+                    resultLevel = level;
+                    resultList.add(nodeList);
+                }
+                List<String> neighbours = getNeighbours(node, set);
+
+                for (String neighbour : neighbours) {
+                    if (set.contains(neighbour)) {
+                        nodeList.add(neighbour);
+                        queue.offer(new ArrayList<>(nodeList));
+                        nodeList.remove(neighbour);
+                        usedWords.add(neighbour);
+                    }
+                }
+
+            }
+            for (String visited : usedWords) {
+                set.remove(visited);
+            }
+
+            if (level == resultLevel) {
+                break;
+            }
+            level++;
+
+        }
+        return resultList;
     }
 }
