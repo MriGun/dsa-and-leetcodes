@@ -126,4 +126,68 @@ public class Questions {
         }
         return resultList;
     }
+
+    //https://leetcode.com/problems/evaluate-division/
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+            Map<String, Map<String, Double>> map = new HashMap<>();
+
+        for (int i = 0; i < equations.size(); i++) {
+            String dividend = equations.get(i).get(0);
+            String divisor = equations.get(i).get(1);
+
+            if (!map.containsKey(dividend)) {
+                map.put(dividend, new HashMap<>());
+            }
+
+            if (!map.containsKey(divisor)) {
+                map.put(divisor, new HashMap<>());
+            }
+
+            double value = values[i];
+
+            map.get(dividend).put(divisor, value);
+            map.get(divisor).put(dividend, 1/value);
+        }
+
+        double result[] = new double[queries.size()];
+        for (int i = 0; i < queries.size(); i++) {
+            List query = queries.get(i);
+            if (!map.containsKey(query.get(0)) || !map.containsKey(query.get(1)) ) {
+                result[i] = -1.0;
+            } else if (query.get(0).equals(query.get(1))) {
+                result[i] = 1.0;
+            } else {
+                Set<String> visited = new HashSet<>();
+                result[i] = calcEquationDfs(query.get(0).toString(), query.get(1).toString(), 1, visited, map);
+            }
+
+        }
+        return result;
+    }
+
+    private double calcEquationDfs(String source, String target, double prod, Set<String> visited, Map<String, Map<String, Double>> map) {
+
+        double result = -1.0;
+        visited.add(source);
+
+        if (map.get(source).containsKey(target)) {
+            result = map.get(source).get(target);
+        }
+        else {
+            for (String neighbour : map.get(source).keySet()) {
+                if (!visited.contains(neighbour)) {
+                    //prod = prod * map.get(source).get(neighbour);
+                    result = calcEquationDfs(neighbour, target, prod * map.get(source).get(neighbour), visited, map);
+                    if (result != -1) {
+                        break;
+                    }
+                    //prod = prod / map.get(source).get(neighbour);
+                }
+            }
+        }
+
+        visited.remove(source);
+
+        return result;
+    }
 }
