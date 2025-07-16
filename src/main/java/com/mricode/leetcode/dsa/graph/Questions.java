@@ -190,4 +190,75 @@ public class Questions {
 
         return result;
     }
+
+    //https://leetcode.com/problems/get-watched-videos-by-your-friends/description/
+
+    class Pair implements Comparable<Pair>{
+        String video;
+        int frequency;
+
+        Pair(String video, int frequency) {
+             this.video = video;
+             this.frequency = frequency;
+        }
+
+        @Override
+        public int compareTo(Pair that) {
+            if (this.frequency == that.frequency) {
+                return this.video.compareTo(that.video);
+            }
+            return this.frequency - that.frequency;
+        }
+    }
+    public List<String> watchedVideosByFriends(List<List<String>> watchedVideos, int[][] friends, int id, int level) {
+
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+
+        queue.offer(id);
+        visited.add(id);
+
+        int curLevel = 0;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            //iterate level by level
+            for (int i = 0; i < size; i++) {
+                int curId = queue.poll();
+                for (int friend : friends[curId]) {
+                    if (!visited.contains(friend)) {
+                        visited.add(friend);
+                        queue.offer(friend);
+                    }
+                }
+            }
+
+            curLevel++;
+            if (curLevel == level) {
+                break;
+            }
+        }
+
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        while (!queue.isEmpty()) {
+            int curId = queue.poll();
+            for (String video : watchedVideos.get(curId)) {
+                frequencyMap.put(video, frequencyMap.getOrDefault(video, 0) + 1);
+            }
+        }
+
+        List<Pair> videoList = new ArrayList<>();
+        for (String video : frequencyMap.keySet()) {
+            videoList.add(new Pair(video, frequencyMap.get(video)));
+        }
+
+        Collections.sort(videoList);
+        List<String> result = new ArrayList<>();
+        for (Pair pair : videoList) {
+            result.add(pair.video);
+        }
+
+        return result;
+    }
 }
