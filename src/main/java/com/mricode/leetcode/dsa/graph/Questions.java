@@ -261,4 +261,75 @@ public class Questions {
 
         return result;
     }
+
+    //https://leetcode.com/problems/rotting-oranges/description/
+    public int orangesRotting(int[][] grid) {
+
+        Queue<int[]> queue = new LinkedList<>();;
+        int freshCount = 0;
+
+        for (int i=0; i<grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                 if (grid[i][j] == 2) {
+                     queue.offer(new int[] {i,j});
+                 }
+                 else if (grid[i][j] == 1) {
+                     freshCount++;
+                 }
+            }
+        }
+
+        if (freshCount == 0) {
+            return 0;
+        }
+
+        int time = 0;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                int[] rottenLoc = queue.poll();
+                int row = rottenLoc[0];
+                int col = rottenLoc[1];
+
+                int neighbours[][] = {{row-1, col},{row, col+1}, {row+1, col}, {row, col-1}};
+
+                for (int neighbour[] : neighbours) {
+
+                    int nr = neighbour[0];
+                    int nc = neighbour[1];
+                    //out of bound check
+                    if (nr < 0 || nr >= grid.length || nc < 0 || nc >= grid[0].length) {
+                        continue;
+                    }
+
+                    //already rotten or empty check
+                    if (grid[nr][nc] == 0 || grid[nr][nc] == 2) {
+                        continue;
+                    }
+
+                    queue.offer(new int[] {nr, nc});
+                    grid[nr][nc] = 2;
+
+                    freshCount--;
+
+                    if (freshCount == 0) {
+                        return time+1;
+                    }
+
+                }
+
+            }
+            /*time++;
+            if (freshCount == 0) {
+                break;
+            }*/
+
+        }
+
+        return freshCount == 0 ? time : -1;
+
+    }
+
 }
