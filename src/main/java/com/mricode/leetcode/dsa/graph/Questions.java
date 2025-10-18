@@ -321,15 +321,53 @@ public class Questions {
                 }
 
             }
-            /*time++;
-            if (freshCount == 0) {
+            time++;
+            /*if (freshCount == 0) {
                 break;
             }*/
 
         }
 
-        return freshCount == 0 ? time : -1;
+        return  -1;
 
+    }
+
+
+    //https://leetcode.com/problems/minimum-time-to-collect-all-apples-in-a-tree/description/
+    public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
+
+        //adj list
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adjList.add(new ArrayList<>());
+        }
+
+        for (int[] edge: edges) {
+            int from = edge[0];
+            int to = edge[1];
+
+            adjList.get(from).add(to);
+            adjList.get(to).add(from);
+        }
+
+        return dfsOfminTime(0, -1, adjList, hasApple);
+    }
+
+    private int dfsOfminTime(int src, int parent, List<List<Integer>> adjList, List<Boolean> hasApple) {
+        int totalTime=0;
+
+        for (int neighbour : adjList.get(src)) {
+            if (neighbour == parent) {
+                continue;
+            }
+            int timeTakenByChild = dfsOfminTime(neighbour, src, adjList, hasApple);
+
+            if (timeTakenByChild > 0 || hasApple.get(neighbour)) {
+                totalTime = totalTime + timeTakenByChild + 2;
+            }
+        }
+
+        return totalTime;
     }
 
 }
