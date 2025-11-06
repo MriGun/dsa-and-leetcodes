@@ -109,4 +109,86 @@ public class BFS {
 
     }
 
+
+    //cycle detection in undirected graph using dfs
+    public boolean isCycleUsingDfs(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        boolean visited[] = new boolean[V];
+        for (int i=0; i<V; i++) {
+            if (!visited[i] && dfsForCycle(i, -1, adj, visited)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isCycleUsingDfs(int V, int[][] edges) {
+        // Code here
+        boolean visited[] = new boolean[V];
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+
+        for (int i=0; i<V; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < edges.length; i++) {
+            int u = edges[i][0];
+            int v = edges[0][i];
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        for (int i=0; i<V; i++) {
+
+            if (!visited[i] && dfsForCycle(i, -1, adj, visited)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean dfsForCycle(int src, int parent, ArrayList<ArrayList<Integer>> adj, boolean visited[]) {
+
+        visited[src] = true;
+        for (int neighbour : adj.get(src)) {
+            if (neighbour == parent) {
+                continue;
+            }
+            if (visited[neighbour]) {
+                return true;
+            }
+            else {
+                if (dfsForCycle(neighbour, src, adj, visited)) {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+
+    }
+
+    public boolean dfsForCycle(int src, int parent, int[][] edges, boolean visited[]) {
+
+        visited[src] = true;
+        for (int neighbour : edges[src]) {
+            if (neighbour == parent) {
+                continue;
+            }
+            if (visited[neighbour]) {
+                return true;
+            }
+            else {
+                if (dfsForCycle(neighbour, src, edges, visited)) {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+
+    }
+
+
 }
