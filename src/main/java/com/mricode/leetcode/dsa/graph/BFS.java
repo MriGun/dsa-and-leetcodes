@@ -133,7 +133,7 @@ public class BFS {
 
         for (int i = 0; i < edges.length; i++) {
             int u = edges[i][0];
-            int v = edges[0][i];
+            int v = edges[i][1];
             adj.get(u).add(v);
             adj.get(v).add(u);
         }
@@ -188,6 +188,75 @@ public class BFS {
 
         return false;
 
+    }
+
+    public boolean isDirectedCyclic(int V, int[][] edges) {
+        // code here
+        boolean visited[] = new boolean[V];
+        boolean pathVisited[] = new boolean[V];
+
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+
+        for (int i=0; i<V; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i=0; i<edges.length; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            adj.get(u).add(v); //as directed onlu u-->v
+            //adj.get(v).add(u);
+        }
+
+        for (int i=0; i<V; i++) {
+            if (!visited[i]) {
+                if (dfsForDirectedCycleCheck(i, visited, adj, pathVisited)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isDirectedCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        // code here
+        boolean visited[] = new boolean[V];
+        boolean pathVisited[] = new boolean[V];
+
+        for (int i=0; i<V; i++) {
+            if (!visited[i]) {
+                if (dfsForDirectedCycleCheck(i, visited, adj, pathVisited)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }
+
+    private boolean dfsForDirectedCycleCheck(int src, boolean[] visited, ArrayList<ArrayList<Integer>> adj, boolean[] pathVisited) {
+        visited[src] = true;
+        pathVisited[src] = true;
+
+        //dfs
+        for (int neighbor : adj.get(src)) {
+            if (pathVisited[neighbor]) {
+                return true;
+            }
+            else if (visited[neighbor]) {
+                continue;
+            }
+            else {
+                if (dfsForDirectedCycleCheck(neighbor, visited, adj, pathVisited)) {
+                    return true;
+                }
+            }
+        }
+
+        pathVisited[src] = false;
+        return false;
     }
 
 
