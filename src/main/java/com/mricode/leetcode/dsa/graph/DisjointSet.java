@@ -6,16 +6,20 @@ public class DisjointSet {
 
     int rank[];
 
+    int size[];
+
     int components;
 
     DisjointSet(int nodes) { // 0 based (5) 0 to 4
         this.parent = new int[nodes];
         this.rank = new int[nodes];
+        this.size = new int[nodes];
         this.components = nodes;
 
         for (int i = 0; i < nodes; i++) {
             this.parent[i] = i;
             this.rank[i] = 0;
+            this.size[i] = 1;
         }
     }
 
@@ -54,11 +58,46 @@ public class DisjointSet {
 
     }
 
+
+    public void unionBySize (int node1, int node2) {
+        //1. find the root parent
+
+        int rootParent1 = findRootParent(node1);
+        int rootParent2 = findRootParent(node2);
+
+        if (rootParent1 == rootParent2) {
+            return;
+        }
+
+        components--;
+
+        //2. union of components
+        //smaller will be added to the bigger one
+
+        if (size[rootParent1] < size[rootParent2]) {
+            parent[rootParent1] = rootParent2;
+            size[rootParent2] += parent[rootParent1];
+        }
+        else {
+            parent[rootParent2] = rootParent1;
+            size[rootParent1] += size[rootParent2];
+        }
+
+    }
+
     public static void main(String[] args) {
-        DisjointSet dsu = new DisjointSet(4);
+        /*DisjointSet dsu = new DisjointSet(4);
         System.out.println("total components ==> " + dsu.components);
         System.out.println(dsu.findRootParent(0) == dsu.findRootParent(3));
         dsu.unionByRank(0, 3);
+
+        System.out.println("total components ==> " + dsu.components);
+        System.out.println(dsu.findRootParent(0) == dsu.findRootParent(3));*/
+
+        DisjointSet dsu = new DisjointSet(4);
+        System.out.println("total components ==> " + dsu.components);
+        System.out.println(dsu.findRootParent(0) == dsu.findRootParent(3));
+        dsu.unionBySize(0, 3);
 
         System.out.println("total components ==> " + dsu.components);
         System.out.println(dsu.findRootParent(0) == dsu.findRootParent(3));
