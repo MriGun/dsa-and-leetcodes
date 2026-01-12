@@ -103,4 +103,48 @@ public class DisjointSet {
         System.out.println(dsu.findRootParent(0) == dsu.findRootParent(3));
     }
 
+
+    //https://leetcode.com/problems/redundant-connection/description/
+
+    int totalNoddes;
+    public int[] findRedundantConnection(int[][] edges) {
+        totalNoddes = edges.length;
+        int res[] = new int[2];
+        DisjointSet disjointSet = new DisjointSet(totalNoddes);
+        for (int [] edge : edges) {
+            if (!disjointSet.unionBySize2(edge[0] -1, edge[1] - 1)) {
+                res = edge;
+            }
+        }
+        return res;
+    }
+
+    public boolean unionBySize2 (int node1, int node2) {
+        //1. find the root parent
+
+        int rootParent1 = findRootParent(node1);
+        int rootParent2 = findRootParent(node2);
+
+        if (rootParent1 == rootParent2) {
+            return false;
+        }
+
+        components--;
+
+        //2. union of components
+        //smaller will be added to the bigger one
+
+        if (size[rootParent1] < size[rootParent2]) {
+            parent[rootParent1] = rootParent2;
+            size[rootParent2] += parent[rootParent1];
+        }
+        else {
+            parent[rootParent2] = rootParent1;
+            size[rootParent1] += size[rootParent2];
+        }
+
+        return true;
+
+    }
+
 }
