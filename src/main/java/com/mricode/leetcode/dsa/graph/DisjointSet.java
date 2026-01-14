@@ -1,5 +1,7 @@
 package com.mricode.leetcode.dsa.graph;
 
+import java.util.ArrayList;
+
 public class DisjointSet {
 
     int parent[];
@@ -141,6 +143,40 @@ public class DisjointSet {
         else {
             parent[rootParent2] = rootParent1;
             size[rootParent1] += size[rootParent2];
+        }
+
+        return true;
+
+    }
+
+
+    //https://leetcode.com/problems/satisfiability-of-equality-equations/description/
+    public boolean equationsPossible(String[] equations) {
+
+        DisjointSet dsu = new DisjointSet(26);
+
+        ArrayList<int[]> notEqualEdges = new ArrayList<>();
+
+        for (String equation : equations) {
+            int u = equation.charAt(0) - 'a';
+            int v = equation.charAt(3) - 'a';
+
+            //construct graphs using "equal to" equations
+            if (equation.charAt(1) == '=') {
+                dsu.unionBySize(u, v);
+            }
+            else {
+                //store. not equal equations
+                notEqualEdges.add(new int[]{u, v});
+            }
+        }
+
+        for (int edge[] : notEqualEdges) {
+            int u = edge[0];
+            int v = edge[1];
+            if (dsu.findRootParent(u) == dsu.findRootParent(v)) {
+                return false;
+            }
         }
 
         return true;
