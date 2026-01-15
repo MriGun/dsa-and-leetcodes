@@ -183,4 +183,28 @@ public class DisjointSet {
 
     }
 
+
+    //https://leetcode.com/problems/number-of-operations-to-make-network-connected/description/
+    public int makeConnected(int n, int[][] connections) {
+       //at least n-1 edges required to connect all nodes into a single component
+        if (connections.length < n-1) {
+            return -1;
+        }
+
+        int wires = 0;
+        DisjointSet dsu = new DisjointSet(n);
+
+        for (int connection[] : connections) {
+            int u = connection[0];
+            int v = connection[1];
+            if (dsu.unionBySize2(u,v)) {
+                wires++;
+            }
+        }
+
+        //for connecting n nodes, we require n-1 edges
+        //so minimum wires requires = (n-1) - (wires used)
+        return n-1-wires;
+    }
+
 }
