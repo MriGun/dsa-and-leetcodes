@@ -1,6 +1,7 @@
 package com.mricode.leetcode.dsa.graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -257,6 +258,47 @@ public class BFS {
 
         pathVisited[src] = false;
         return false;
+    }
+
+
+    //https://leetcode.com/problems/is-graph-bipartite/description/
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        int colour[] = new int[n];
+        Arrays.fill(colour, -1);
+        for (int i = 0; i < n; i++) {
+            if (colour[i] == -1) {
+                if (!colour(i, graph, colour)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean colour(int src, int[][] graph, int[] colour) {
+
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(src);
+        colour[src] = 0;
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            int[] neibours = graph[node];
+
+            for (int neighbour : neibours) {
+                if (colour[neighbour] == -1) {
+                   colour[neighbour] = 1 - colour[node];
+                   queue.offer(neighbour);
+                }
+                else if (colour[neighbour] == colour[node]) {
+                    return false;
+                }
+
+            }
+        }
+
+        return true;
+
     }
 
 
