@@ -1,5 +1,6 @@
 package com.mricode.leetcode.dsa.greedy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GreedyApproach {
@@ -67,4 +68,44 @@ public class GreedyApproach {
          return arrows;
 
     }
+
+    //https://www.geeksforgeeks.org/problems/job-sequencing-problem-1587115620/1
+    /*public ArrayList<Integer> jobSequencing(int[] deadline, int[] profit) {
+        // code here
+        //find the maximum deadline
+        int n = 0;
+        for (int d : deadline) {
+             n = Math.max(n, d);
+        }
+
+        int assignedJobs[] = new int[n+1];
+        Arrays.fill(assignedJobs, -1);
+        Integer index[] = new Integer[profit.length];
+        for (int i = 0; i < profit.length; i++) {
+            index[i] = i;
+        }
+
+        Arrays.sort(index, (a, b) -> profit[b] -profit[a]);
+
+        int count = 0;
+        int maxProfit = 0;
+
+
+        for (int i = 0; i < profit.length; i++) {
+            int ind = index[i];
+            int d = deadline[ind];
+            while (assignedJobs[ind] != -1) {
+                d--;
+            }
+
+            if (d == 0) {
+                continue;
+            }
+
+            count++;
+            maxProfit += profit[]
+
+        }
+
+    }*/
 }
