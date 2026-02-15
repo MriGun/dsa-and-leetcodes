@@ -108,4 +108,19 @@ public class GreedyApproach {
         }
 
     }*/
+
+    //https://www.geeksforgeeks.org/problems/assign-mice-holes3053/0
+    public int assignHole(int[] mices, int[] holes) {
+        // code here
+        Arrays.sort(mices);
+        Arrays.sort(holes);
+
+        int maxTime = 0;
+        for (int i = 0; i < mices.length; i++) {
+            maxTime = Math.max(maxTime, Math.abs(mices[i] - holes[i]));
+        }
+
+        return maxTime;
+
+    }
 }
