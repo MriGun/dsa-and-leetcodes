@@ -108,4 +108,68 @@ public class GreedyApproach {
         }
 
     }*/
+
+    //https://www.geeksforgeeks.org/problems/assign-mice-holes3053/0
+    public int assignHole(int[] mices, int[] holes) {
+        // code here
+        Arrays.sort(mices);
+        Arrays.sort(holes);
+
+        int maxTime = 0;
+        for (int i = 0; i < mices.length; i++) {
+            maxTime = Math.max(maxTime, Math.abs(mices[i] - holes[i]));
+        }
+
+        return maxTime;
+
+    }
+
+    //https://www.geeksforgeeks.org/problems/police-and-thieves--141631/1
+    public int catchThieves(char[] arr, int k) {
+        // code here
+        int arrSize  = arr.length;
+        int thief = -1;
+        int police = -1;
+
+        for (int i = 0; i < arrSize; i++) {
+            if (police == -1 && arr[i] == 'P') {
+               police = i;
+            }
+            if (thief == -1 && arr[i] == 'T') {
+                thief = i;
+            }
+        }
+
+        if (thief == -1 || police == -1) {
+            return 0;
+        }
+
+        int caught = 0;
+        while (police < arrSize && thief< arrSize) {
+              if (Math.abs(police-thief) <=k) {
+                 caught++;
+                  police++;
+                 while (police < arrSize && arr[police] != 'P') {
+                     police++;
+                 }
+                  thief++;
+                  while (thief < arrSize && arr[thief] != 'T') {
+                      thief++;
+                  }
+              }
+              else if (police < thief) {
+                    police++;
+                  while (police < arrSize && arr[police] != 'P') {
+                      police++;
+                  }
+              }
+              else {
+                  thief++;
+                  while (thief < arrSize && arr[thief] != 'T') {
+                      thief++;
+                  }
+              }
+        }
+        return caught;
+    }
 }
