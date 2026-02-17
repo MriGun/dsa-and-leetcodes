@@ -2,6 +2,8 @@ package com.mricode.leetcode.dsa.greedy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class GreedyApproach {
 
@@ -171,5 +173,50 @@ public class GreedyApproach {
               }
         }
         return caught;
+    }
+
+    //https://www.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1
+    class Item implements Comparable<Item>{
+        int val;
+        int wt;
+        double ratio;
+        Item(int v, int w){
+            val = v;
+            wt = w;
+            ratio = (double)val/(double)wt;
+        }
+        //decresing order of ratio sort
+        public int compareTo(Item that){
+            if(this.ratio <= that.ratio) return 1;
+            return -1;
+        }
+    }
+    public double fractionalKnapsack(List<Integer> val, List<Integer>  wt, int capacity) {
+        // code here
+         int n = val.size();
+         ArrayList<Item> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            list.add(new Item(val.get(i), wt.get(i)));
+        }
+
+        Collections.sort(list);
+
+        double result = 0.0;
+        for (Item item : list) {
+            if (item.wt >= capacity) {
+                result = result + (capacity * item.ratio);
+                capacity = 0;
+            }
+            else {
+                result = result + item.val;
+                capacity = capacity - item.wt;
+            }
+            if (capacity == 0) {
+                break;
+            }
+        }
+
+        return result;
+
     }
 }
