@@ -243,4 +243,29 @@ public class GreedyApproach {
         }
         return res;
     }
+
+    //https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/description/
+    public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
+
+        int size = rocks.length;
+        int diff[] = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            diff[i] = capacity[i] - rocks[i];
+        }
+
+        Arrays.sort(diff);
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            if (diff[i] <= additionalRocks) {
+                additionalRocks -= diff[i];
+                diff[i] = 0;
+            }
+            if (diff[i] == 0) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
