@@ -219,4 +219,53 @@ public class GreedyApproach {
         return result;
 
     }
+
+    //https://leetcode.com/problems/maximum-units-on-a-truck/description/
+    public int maximumUnits(int[][] boxTypes, int truckSize) {
+
+        //sort in decreasing order of ratio
+        //a[1], b[1] -> value of 1 item
+        Arrays.sort(boxTypes, (a,b) -> b[1] - a[1]);
+        int res = 0;
+        for (int[] boxType : boxTypes) {
+            if (boxType[0] > truckSize) {
+                res += (truckSize * boxType[1]);
+                truckSize = 0;
+            }
+            else {
+                res += (boxType[0] * boxType[1]);
+                truckSize -= boxType[0];
+            }
+
+            if (truckSize == 0) {
+                break;
+            }
+        }
+        return res;
+    }
+
+    //https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/description/
+    public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
+
+        int size = rocks.length;
+        int diff[] = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            diff[i] = capacity[i] - rocks[i];
+        }
+
+        Arrays.sort(diff);
+
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            if (diff[i] <= additionalRocks) {
+                additionalRocks -= diff[i];
+                diff[i] = 0;
+            }
+            if (diff[i] == 0) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
