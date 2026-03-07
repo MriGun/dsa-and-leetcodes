@@ -337,4 +337,32 @@ public class DynamicProgramming {
 
     }
 
+    //https://leetcode.com/problems/house-robber-ii/description/
+    public int rob2WithBottomUpWithSpaceOptimized(int[] nums) {
+        //return  robRecur(nums, nums.length-1);
+
+        int n = nums.length;
+        if (n ==1) {
+            return nums[0];
+        }
+        int num1[] = new int[n-1];
+        int num2[] = new int[n-1];
+        int j = 0;
+        int k = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (i != 0) {
+                num1[j] = nums[i];
+                j++;
+            }
+
+            if (i != n-1) {
+                num2[k] = nums[i];
+                k++;
+            }
+        }
+
+        return Math.max(robWithBottomUpWithSpaceOptimized(num1), robWithBottomUpWithSpaceOptimized(num2));
+    }
+
 }
