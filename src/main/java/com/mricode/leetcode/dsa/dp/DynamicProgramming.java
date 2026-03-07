@@ -217,4 +217,152 @@ public class DynamicProgramming {
 
     }
 
+    //bottom up solution
+    public int minCostClimbingStairsBottomUp(int[] cost) {
+
+        int dp[] = new int[cost.length+1];
+        int n = cost.length;
+        int prev2 = 0;
+        int prev1  = 0;
+        int ans = 0;
+
+        for (int state = 2; state <=n; state++) {
+            int oneStep = cost[state-1] + dp[state-1];
+            int twoStep = cost[state-2] + dp[state-2];
+            ans = Math.min(oneStep, twoStep);
+            prev2 = prev1;
+            prev1 = ans;
+        }
+
+        return ans;
+    }
+
+
+    //https://leetcode.com/problems/house-robber/description/
+    public int rob(int[] nums) {
+        //return  robRecur(nums, nums.length-1);
+        int n = nums.length;
+        int dp[] = new int [n+1];
+        Arrays.fill(dp, -1);
+        return robRecurTopDownDp(nums, n, dp);
+    }
+
+    //bottom up approach
+    public int robWithBottomUp(int[] nums) {
+        //return  robRecur(nums, nums.length-1);
+        int n = nums.length;
+        int dp[] = new int [n+1];
+        dp[0] = 0;
+        dp[1] = nums[0];
+        for (int state = 2; state < n+1; state++) {
+            int pick = nums[state-1] + dp[state-2];
+            int noPick = 0 + dp[state-1];
+            dp[state] = Math.max(pick, noPick);
+        }
+
+        return dp[n];
+    }
+
+
+    public int robWithBottomUpWithSpaceOptimized(int[] nums) {
+        //return  robRecur(nums, nums.length-1);
+
+        int n = nums.length;
+        if (n ==1) {
+            return nums[0];
+        }
+        int prev2 = 0;
+        int prev1 = nums[0];
+        int ans = 0;
+        for (int state = 2; state < n+1; state++) {
+            int pick = nums[state-1] + prev2;
+            int noPick = 0 + prev1;
+            ans = Math.max(pick, noPick);
+            prev2 = prev1;
+            prev1 = ans;
+        }
+
+        return ans;
+    }
+
+
+
+    //normal recursion way
+    public int robRecur(int[] nums, int index) {
+
+        //base case
+        if (index == 0) {
+            return nums[0];
+        }
+
+        if (index == -1) {
+            return 0;
+        }
+
+        //pick and no pick logic
+        int pick = nums[index] + robRecur(nums, index-2);
+        int noPick = 0 + robRecur(nums, index-1);
+
+        return Math.max(pick, noPick);
+
+    }
+
+    //top down dp way
+    //shifting logic
+    public int robRecurTopDownDp(int[] nums, int index, int dp[]) {
+
+        //base case
+        if (index == 1) {
+            dp[index] = nums[0];
+            return nums[0];
+        }
+
+        if (index == 0) {
+            dp[index] = 0;
+            return 0;
+        }
+
+        if (dp[index] != -1) {
+            return dp[index];
+        }
+
+         //pick and no pick logic
+
+        //pick and no pick logic
+        int pick = nums[index-1] + robRecurTopDownDp(nums, index-2, dp);
+        int noPick = 0 + robRecurTopDownDp(nums, index-1, dp);
+
+        dp[index] = Math.max(pick, noPick);
+        return dp[index];
+
+    }
+
+    //https://leetcode.com/problems/house-robber-ii/description/
+    public int rob2WithBottomUpWithSpaceOptimized(int[] nums) {
+        //return  robRecur(nums, nums.length-1);
+
+        int n = nums.length;
+        if (n ==1) {
+            return nums[0];
+        }
+        int num1[] = new int[n-1];
+        int num2[] = new int[n-1];
+        int j = 0;
+        int k = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (i != 0) {
+                num1[j] = nums[i];
+                j++;
+            }
+
+            if (i != n-1) {
+                num2[k] = nums[i];
+                k++;
+            }
+        }
+
+        return Math.max(robWithBottomUpWithSpaceOptimized(num1), robWithBottomUpWithSpaceOptimized(num2));
+    }
+
 }
