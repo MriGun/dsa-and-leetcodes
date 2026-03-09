@@ -365,4 +365,88 @@ public class DynamicProgramming {
         return Math.max(robWithBottomUpWithSpaceOptimized(num1), robWithBottomUpWithSpaceOptimized(num2));
     }
 
+    //https://www.geeksforgeeks.org/problems/check-if-there-exists-a-subsequence-with-sum-k/0
+    public static boolean checkSubsequenceSum(int N, int[] arr, int K) {
+        // code here
+        int dp[][] = new int[N][K+1];
+        return checkSubsequenceSumRecur(arr, K, N-1, dp);
+    }
+
+    //1 -> true
+    //2 -> false
+    //0 -> not visited
+    public static boolean checkSubsequenceSumRecur(int[] arr, int K, int index, int dp[][]) {
+        // code here
+
+        //base case
+        if (K == 0) {
+            dp[index][K] = 1;
+            return true;
+        }
+
+        if (index == 0) {
+            if (K == arr[index]) {
+                dp[index][K] = 1;
+                return true;
+            }
+            else {
+                dp[index][K] = 2;
+                return false;
+            }
+        }
+
+        if (dp[index][K] != 0) {
+            return dp[index][K] == 1;
+        }
+
+        //pick and no pick logic
+        boolean pick = false;
+        if (arr[index] <= K) {
+            pick = checkSubsequenceSumRecur(arr, K-arr[index], index-1, dp);
+            if (pick) {
+                dp[index][K] = 1;
+                return true;
+            }
+        }
+
+        boolean noPick = checkSubsequenceSumRecur(arr, K, index-1, dp);
+        dp[index][K] = noPick ? 1 : 0;
+        return noPick;
+
+    }
+
+    public static boolean checkSubsequenceSumBottomUp(int N, int[] arr, int K) {
+        // code here
+        int dp[][] = new int[N][K+1];
+        for (int i = 0; i < N; i++) {
+            dp[i][0] = 1;
+        }
+
+        for (int t = 1; t <=K; t++) {
+            if (t == arr[0]) {
+                dp[0][t] = 1;
+            }
+            else {
+                dp[0][t] = 2;
+            }
+        }
+
+        for (int i = 1; i <N; i++) {
+            for (int j = 1; j <=K; j++) {
+                int pick = 2;
+                if (arr[i] <= j) {
+                    pick = dp[i-1][j-arr[i]]; //checkSubsequenceSumRecur(arr, K-arr[i], i-1, dp);
+                    if (pick == 1) {
+                        dp[i][j] = 1;
+                        continue;
+                    }
+                }
+
+                int noPick = dp[i-1][j];//checkSubsequenceSumRecur(arr, j, i-1, dp);
+                dp[i][j] = noPick;
+            }
+        }
+        return dp[N-1][K] == 1;
+    }
+
 }
