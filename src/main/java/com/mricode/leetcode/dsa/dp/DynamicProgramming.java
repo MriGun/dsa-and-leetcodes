@@ -449,39 +449,6 @@ public class DynamicProgramming {
         return dp[N-1][K] == 1;
     }
 
-    //https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/0
-    public int perfectSum(int[] nums, int target) {
-        // code here
-        return perfectSumRecur(nums, target, nums.length-1);
-    }
 
-    public int perfectSumRecur(int[] nums, int target, int index) {
-        // base case
-        if (index == 0) {
-            if (target == 0 && nums[index] == 0) {
-                return 2;
-            }
-            else if (target == 0) {
-                return 1;
-            }
-            else if (target == nums[index]) {
-                return 1;
-            }
-            else {
-                return 0;
-            }
-
-        }
-
-        int pick = 0;
-        if (nums[index] <= target) {
-            pick = perfectSumRecur(nums, target-nums[index], index-1);
-        }
-
-        int noPick = perfectSumRecur(nums, target, index-1);
-
-
-        return pick + noPick;
-    }
 
 }
