@@ -112,4 +112,32 @@ public class InfiniteSupplyPattern {
         }
         return dp[n-1][amount];
     }
+
+    //https://leetcode.com/problems/coin-change-ii/description/
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int dp[][] = new int[n][amount+1];
+        for (int a = 0; a < amount +1; a++) {
+            if (a % coins[0] == 0) {
+                dp[0][a] = 1;//a/coins[0];
+            }
+            else {
+                dp[0][a] = 0; //(int)(1e9);
+            }
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int a = 0; a < amount +1; a++) {
+                int pick = 0; //(int)(1e9);
+                if (a >= coins[i]) {
+                    pick = dp[i][a-coins[i]];//coinChangeRecurTopDown(coins, a-coins[i], i, dp);
+                }
+
+                int noPick = dp[i-1][a]; //coinChangeRecurTopDown(coins, a, i-1, dp);
+                dp[i][a] =pick + noPick;
+            }
+        }
+
+        return dp[n-1][amount];
+    }
 }
