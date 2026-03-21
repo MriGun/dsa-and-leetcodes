@@ -140,4 +140,89 @@ public class InfiniteSupplyPattern {
 
         return dp[n-1][amount];
     }
+
+    //https://www.geeksforgeeks.org/problems/rod-cutting0840/1
+    public int cutRod(int[] price) {
+        // code here
+        int N = price.length;
+        return cutRodRecur(N, N-1, price);
+    }
+
+    public int cutRodRecur(int N, int index, int[] price) {
+        // base case
+        if (index == 0) {
+            return N*price[index];
+        }
+
+        int pick = 0;
+        int curLen = index+1;
+        if (N >= curLen) {
+            pick = price[index] + cutRodRecur(N-curLen, index, price);
+        }
+
+        int noPick = 0 + cutRodRecur(N, index-1, price);
+
+        return Math.max(pick, noPick);
+
+    }
+
+    public int cutRodTopDownDP(int[] price) {
+        // code here
+        int N = price.length;
+        int[][] dp = new int[N][N+1];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N+1; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        return cutRodRecurTopDown(N, N-1, price, dp);
+    }
+
+    public int cutRodRecurTopDown(int N, int index, int[] price, int[][] dp) {
+        // base case
+        if (index == 0) {
+            dp[index][N] = N*price[index];
+            return N*price[index];
+        }
+
+        if (dp[index][N] != -1) {
+            return dp[index][N];
+        }
+
+        int pick = 0;
+        int curLen = index+1;
+        if (N >= curLen) {
+            pick = price[index] + cutRodRecurTopDown(N-curLen, index, price, dp);
+        }
+
+        int noPick = 0 + cutRodRecurTopDown(N, index-1, price, dp);
+
+        dp[index][N] = Math.max(pick, noPick);
+        return dp[index][N] ;
+
+    }
+
+    public int cutRodBottomUpDP(int[] price) {
+        // code here
+        int N = price.length;
+        int[][] dp = new int[N][N+1];
+        for (int r = 0; r < N+1; r++) {
+            dp[0][r] = r*price[0];
+        }
+
+
+        for (int i = 1; i < N; i++) {
+            for (int j = 0; j < N+1; j++) {
+                int pick = 0;
+                int curLen = i+1;
+                if (j >= curLen) {
+                    pick = price[i] + dp[i][j-curLen]; //cutRodRecurTopDown(j-curLen, i, price, dp);
+                }
+
+                int noPick = 0 + dp[i-1][j]; //cutRodRecurTopDown(j, i-1, price, dp);
+                dp[i][j] = Math.max(pick, noPick);
+            }
+        }
+        return dp[N-1][N]; //cutRodRecurTopDown(N, N-1, price, dp);
+    }
 }
